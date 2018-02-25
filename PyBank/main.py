@@ -1,11 +1,3 @@
-# ## Option 1: PyBank
-# ![Revenue](Images/revenue-per-lead.jpg)
-# In this challenge, you are tasked with creating a Python script for analyzing the financial records of your company.
-#You will be given two sets of revenue data (`budget_data_1.csv` and `budget_data_2.csv`). 
-#Each dataset is composed of two columns: `Date` and `Revenue`. 
-#(Thankfully, your company has rather lax standards for accounting so the records are simple.)
-# Your task is to create a Python script that analyzes the records to calculate each of the following:
-
 import os
 import csv
 
@@ -15,8 +7,12 @@ months =[]
 revenue = []
 Average_Change = 0
 reve_diff = []
-file_path = input("Enter the file path: ")
-with open(file_path, newline="") as csvfile: # open the csv file
+filepath = input("Enter the file path: ")
+filename = input("Enter the file name (include extension): ")
+
+PyBank_csv = os.path.join(filepath, filename)
+
+with open(PyBank_csv, newline="") as csvfile: # open the csv file
     csvreader = csv.reader(csvfile, delimiter = ",") # read the csv file
     next(csvreader, None) # skip the header
     #loop thru each row and extract the data into a dictionary "revenue_data"
@@ -38,17 +34,27 @@ with open(file_path, newline="") as csvfile: # open the csv file
     max_index = int(reve_diff.index(max(reve_diff)))
     min_index = int(reve_diff.index(min(reve_diff)))
 
-print("-----------------------------------------------------------")
-print("Financial Analysis")
-print("-------------------------------------------------")
-# * The total number of months included in the dataset        
-print("Total Months: " + str(len(revenue_data)))
-# * The total amount of revenue gained over the entire period
-print("Total Revenue: $" + str(int(sum(revenue_data.values()))))
-# * The average change in revenue between months over the entire period
-print("Average Revenue Change: $" + str(int(Average_Change)))
-# * The greatest increase in revenue (date and amount) over the entire period
-print("Greatest Increase in Revenue: "+ months[max_index] + " ($" + str(Inc_Rev) + ")")
-# * The greatest decrease in revenue (date and amount) over the entire period
-print("Greatest Decrease in Revenue: " + months[min_index] + " ($" + str(Dec_Rev) + ")")
-
+# set a variable for output file.
+#provide filename for the output file 
+output_filename = input("Enter a file name to save the output (with extension. Ex. outputfile.txt) : ")
+output_file = os.path.join(filepath, output_filename) 
+with open(output_file, 'w', newline ="") as datafile: # creates an output file name in the same folder as the inputfile.
+    writer  = csv.writer(datafile)
+    writer.writerow(["-----------------------------------------------------------"])
+    writer.writerow(["Financial Analysis"])
+    writer.writerow(["-------------------------------------------------"])
+    # * The total number of months included in the dataset 
+    writer.writerow(["Total Months:  "+ str(len(revenue_data))])
+    # * The total amount of revenue gained over the entire period
+    writer.writerow(["Total Revenue: $" + str(int(sum(revenue_data.values())))])
+    # * The average change in revenue between months over the entire period
+    writer.writerow(["Average Revenue Change: $" + str(int(Average_Change))])
+    # * The greatest increase in revenue (date and amount) over the entire period
+    writer.writerow(["Greatest Increase in Revenue: "+ months[max_index] + " ($" + str(Inc_Rev) + ")"])
+    # * The greatest decrease in revenue (date and amount) over the entire period
+    writer.writerow(["Greatest Decrease in Revenue: " + months[min_index] + " ($" + str(Dec_Rev) + ")"])
+#writes the output to the terminal   
+with open(output_file, 'r', newline="")as datafile :
+    reader = csv.reader(datafile, delimiter = ",")
+    for row in reader:
+        print(row)
