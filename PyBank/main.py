@@ -28,7 +28,7 @@ with open(PyBank_csv, newline="") as csvfile: # open the csv file
         
     # * The greatest increase & decrease in revenue (date and amount) over the entire period
     for i in range(len(revenue)-1) :
-        reve_diff.append(revenue[i]-revenue[i+1])
+        reve_diff.append(revenue[i+1]-revenue[i])
     Inc_Rev = int(max(reve_diff))
     Dec_Rev = int(min(reve_diff))
     max_index = int(reve_diff.index(max(reve_diff)))
@@ -50,9 +50,9 @@ with open(output_file, 'w', newline ="") as datafile: # creates an output file n
     # * The average change in revenue between months over the entire period
     writer.writerow(["Average Revenue Change: $" + str(int(Average_Change))])
     # * The greatest increase in revenue (date and amount) over the entire period
-    writer.writerow(["Greatest Increase in Revenue: "+ months[max_index] + " ($" + str(Inc_Rev) + ")"])
+    writer.writerow(["Greatest Increase in Revenue: "+ months[max_index+1] + " ($" + str(Inc_Rev) + ")"])
     # * The greatest decrease in revenue (date and amount) over the entire period
-    writer.writerow(["Greatest Decrease in Revenue: " + months[min_index] + " ($" + str(Dec_Rev) + ")"])
+    writer.writerow(["Greatest Decrease in Revenue: " + months[min_index+1] + " ($" + str(Dec_Rev) + ")"])
 #writes the output to the terminal   
 with open(output_file, 'r', newline="")as datafile :
     reader = csv.reader(datafile, delimiter = ",")
