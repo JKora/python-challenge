@@ -40,7 +40,7 @@ output_filename = input("Enter a file name to save the output (with extension. E
 output_file = os.path.join(filepath, output_filename) 
 with open(output_file, 'w', newline ="") as datafile: # creates an output file name in the same folder as the inputfile.
     writer  = csv.writer(datafile)
-    writer.writerow(["-----------------------------------------------------------"])
+    writer.writerow(['-----------------------------------------------------------'])
     writer.writerow(["Financial Analysis"])
     writer.writerow(["-------------------------------------------------"])
     # * The total number of months included in the dataset 
@@ -53,8 +53,9 @@ with open(output_file, 'w', newline ="") as datafile: # creates an output file n
     writer.writerow(["Greatest Increase in Revenue: "+ months[max_index+1] + " ($" + str(Inc_Rev) + ")"])
     # * The greatest decrease in revenue (date and amount) over the entire period
     writer.writerow(["Greatest Decrease in Revenue: " + months[min_index+1] + " ($" + str(Dec_Rev) + ")"])
-#writes the output to the terminal   
+    
 with open(output_file, 'r', newline="")as datafile :
     reader = csv.reader(datafile, delimiter = ",")
     for row in reader:
         print(row)
+
